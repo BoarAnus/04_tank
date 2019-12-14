@@ -1,0 +1,17 @@
+concept
+	drive a tank
+	use it to blow up other tanks and equipment
+	keep it fun!
+
+rules
+	last man standing wins
+	dive the tank(contols)
+	do the shooting
+	
+requirements
+	Explosions!
+	exploding sounds
+	tanks!
+	engine running sounds
+	control scheme
+	turrets
