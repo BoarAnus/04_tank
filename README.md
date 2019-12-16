@@ -14,3 +14,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Stylised title screen
 *Made some ui elements do the thing
 *Got tank posession
+*put AI script to AI tanks
