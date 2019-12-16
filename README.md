@@ -16,3 +16,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Got tank posession
 *put AI script to AI tanks
 *Ai tanks can now see the player
+*Setup tick for player controller and psudeo coded aiming routines
