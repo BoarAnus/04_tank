@@ -15,3 +15,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Made some ui elements do the thing
 *Got tank posession
 *put AI script to AI tanks
+*Ai tanks can now see the player
