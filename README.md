@@ -12,3 +12,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Adding Camera controls
 *Started title screen
 *Stylised title screen
+*Made some ui elements do the thing
