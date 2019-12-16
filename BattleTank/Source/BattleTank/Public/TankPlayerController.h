@@ -24,4 +24,14 @@ private:
 	ATank* GetControlledTank() const;
 
 	void BeginPlay() override;
+
+	bool GetSightRayHitLocation(FVector& Hitlocation) const;
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairXLocation = 0.5f;
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairYLocation = 0.3333f;
+	
+
 };
