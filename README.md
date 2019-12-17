@@ -18,3 +18,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Ai tanks can now see the player
 *Setup tick for player controller and psudeo coded aiming routines
 *added finding target retical position on screen and fixed displaying retical
+*Can now see where player is looking/aiming at
