@@ -21,3 +21,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Can now see where player is looking/aiming at
 *can see AI tanks aiming through tank api
 *aiming component now knows where the barrel is
+*setup projectile velocity variable
