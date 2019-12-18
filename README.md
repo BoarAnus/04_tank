@@ -24,3 +24,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *setup projectile velocity variable
 *Used SuggestProjectileVelocity to get aim direction
 *Added editable properties to barrel for max/min height and movement speed
+*Tank Barrel now moving! Did the clamps!

@@ -2,8 +2,8 @@
 
 #include "TankPlayerController.h"
 #include "GameFramework/PlayerState.h"
+#include "Public/Tank.h"	
 #include "DrawDebugHelpers.h" //drawdebughelpers wont be needed later
-#include "GameFramework/PlayerController.h"
 #include "Math/Vector.h"
 #include "Engine/World.h"
 #include "BattleTank.h"
@@ -37,11 +37,13 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; } //protect engine from crashing
+
 	FVector HitLocation; // Out Parameter
 	if (GetSightRayHitLocation(HitLocation)) //Get world locations of linetrace through crosshair
 	{
 		GetControlledTank()->AimAt(HitLocation);	
 	}
+	
 }
 
 // FVector HitLocation is OUT var

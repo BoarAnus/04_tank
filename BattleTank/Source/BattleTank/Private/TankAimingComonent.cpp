@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"
 #include "TankBarrel.h"
+#include "BattleTank.h"
 #include "Containers/Array.h"
 #include "TankAimingComonent.h"
 
@@ -44,7 +45,13 @@ void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
 	if (BHaveAimSoulution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		MoveBarrelTowards(AimDirection);
+		MoveBarrelTowards(AimDirection); 
+		auto TimeLog = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f -- Aiming at  %s"),TimeLog, *AimDirection.ToString());
+	}else
+	{
+		auto TimeLog = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f -- No Aim soulution"),TimeLog);
 	}
 
 	
@@ -57,14 +64,16 @@ void UTankAimingComonent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator %s"), *AimAsRotator.ToString());
+	
 
 	//get desired elevation
 	//Get current rotation
 	//get cuttent elevation
 
 
-	Barrel->Elevate(5);	//TODO remove number
+	Barrel->Elevate(DeltaRotator.Pitch);
+
+
 	//if current elevation is desired elevation
 		//do nothing
 	//else move barrel

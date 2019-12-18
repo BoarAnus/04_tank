@@ -3,6 +3,7 @@
 
 #include "GameFramework/PlayerState.h"
 #include "TankAiController.h"
+#include "Tank.h"
 #include "Engine/World.h"
 #include "BattleTank.h"		//needed for the tank
 

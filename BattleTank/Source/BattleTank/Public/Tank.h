@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "TankAimingComonent.h"
 #include "Tank.generated.h"
 
-class UTankBarrel;  //Foward Decleration
+//Foward Decleration
+class UTankBarrel;  
+class UTankAimingComonent;
+
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -26,17 +28,13 @@ public:
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float LaunchSpeed = 100000;  //Todo Find sensible default
 
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UTankAimingComonent* TankAimingComponent = nullptr;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };
