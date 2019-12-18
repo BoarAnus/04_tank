@@ -22,3 +22,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *can see AI tanks aiming through tank api
 *aiming component now knows where the barrel is
 *setup projectile velocity variable
+*Used SuggestProjectileVelocity to get aim direction

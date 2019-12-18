@@ -37,7 +37,6 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; } //protect engine from crashing
-
 	FVector HitLocation; // Out Parameter
 	if (GetSightRayHitLocation(HitLocation)) //Get world locations of linetrace through crosshair
 	{
@@ -48,10 +47,10 @@ void ATankPlayerController::AimTowardsCrosshair()
 // FVector HitLocation is OUT var
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	int32 ViewportSizeX, ViewportSizeY; 
-	GetViewportSize(ViewportSizeX, ViewportSizeY); 
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
-	
+
 	// Deproject screen position fo crosshair to world direction
 	FVector PlayerLookDirection;
 	if (GetLookDirection(ScreenLocation, PlayerLookDirection))
@@ -63,7 +62,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	{
 		return false;
 	}
-	
 }
 
 
@@ -97,7 +95,5 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	{
 		return false;
 	}
-	
-	
 }
 
