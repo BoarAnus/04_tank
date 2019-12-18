@@ -3,6 +3,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"
+#include "TankBarrel.h"
 #include "Containers/Array.h"
 #include "TankAimingComonent.h"
 
@@ -17,27 +18,9 @@ UTankAimingComonent::UTankAimingComonent()
 }
 
 
-void UTankAimingComonent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComonent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
-}
-
-// Called when the game starts
-void UTankAimingComonent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UTankAimingComonent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
 void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
@@ -46,23 +29,48 @@ void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("LaunchPoint"));
-	if (UGameplayStatics::SuggestProjectileVelocity(
-			this,
-			OutLaunchVelocity,
-			StartLocation,
-			HitLocation,
-			LaunchSpeed,
-			false,
-			0.f,
-			0.f,
-			ESuggestProjVelocityTraceOption::DoNotTrace
-			)	
-	)
+	bool BHaveAimSoulution = UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		OutLaunchVelocity,
+		StartLocation,
+		HitLocation,
+		LaunchSpeed,
+		false,
+		0.f,
+		0.f,
+		ESuggestProjVelocityTraceOption::DoNotTrace
+	);
+
+	if (BHaveAimSoulution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("Firing at %s"), *AimDirection.ToString())
+		MoveBarrelTowards(AimDirection);
 	}
 
 	
 
 }
+
+void UTankAimingComonent::MoveBarrelTowards(FVector AimDirection)
+{
+	//Get desired rotation
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator %s"), *AimAsRotator.ToString());
+
+	//get desired elevation
+	//Get current rotation
+	//get cuttent elevation
+
+
+	Barrel->Elevate(5);	//TODO remove number
+	//if current elevation is desired elevation
+		//do nothing
+	//else move barrel
+
+	//if current rotation is desired rotation
+		// do nothing
+	//else move barrel
+}
+

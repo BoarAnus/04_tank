@@ -23,3 +23,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *aiming component now knows where the barrel is
 *setup projectile velocity variable
 *Used SuggestProjectileVelocity to get aim direction
+*Added editable properties to barrel for max/min height and movement speed
