@@ -26,3 +26,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Added editable properties to barrel for max/min height and movement speed
 *Tank Barrel now moving! Did the clamps!
 *Tank Turret does the moving! Did the challange without the help!(proud)
+*Spawning Rounds! Stationary rounds!

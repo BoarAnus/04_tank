@@ -6,7 +6,6 @@
 #include "TankBarrel.h"
 #include "Turret.h"
 #include "BattleTank.h"
-#include "Containers/Array.h"
 #include "TankAimingComonent.h"
 
 // Sets default values for this component's properties
