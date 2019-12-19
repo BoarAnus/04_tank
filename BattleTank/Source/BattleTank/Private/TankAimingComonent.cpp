@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"
 #include "TankBarrel.h"
+#include "Turret.h"
 #include "BattleTank.h"
 #include "Containers/Array.h"
 #include "TankAimingComonent.h"
@@ -21,12 +22,18 @@ UTankAimingComonent::UTankAimingComonent()
 
 void UTankAimingComonent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
+	if (!BarrelToSet) { return; }  //protect against crashing
 	Barrel = BarrelToSet;
 }
 
+void UTankAimingComonent::SetTurretReference(UTurret* TurretToSet)
+{
+	if (!TurretToSet) { return; }  //protect against crashing
+	Turret = TurretToSet;
+}
 void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
 {
-	if (!Barrel) { return; }
+	if (!Barrel) { return; }  //protect against crashing
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("LaunchPoint"));
@@ -46,12 +53,10 @@ void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection); 
-		auto TimeLog = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f -- Aiming at  %s"),TimeLog, *AimDirection.ToString());
+		
 	}else
 	{
-		auto TimeLog = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f -- No Aim soulution"),TimeLog);
+		
 	}
 
 	
@@ -72,6 +77,8 @@ void UTankAimingComonent::MoveBarrelTowards(FVector AimDirection)
 
 
 	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Rotate(DeltaRotator.Yaw);
+
 
 
 	//if current elevation is desired elevation

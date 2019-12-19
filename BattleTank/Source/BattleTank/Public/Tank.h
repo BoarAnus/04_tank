@@ -8,6 +8,7 @@
 
 //Foward Decleration
 class UTankBarrel;  
+class UTurret;
 class UTankAimingComonent;
 
 
@@ -24,6 +25,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	UFUNCTION(BlueprintCallable)
+		void SetTurretReference(UTurret* TurretToSet);
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float LaunchSpeed = 100000;  //Todo Find sensible default

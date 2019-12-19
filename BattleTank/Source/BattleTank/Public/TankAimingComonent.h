@@ -7,7 +7,8 @@
 #include "TankAimingComonent.generated.h"
 
 //Foward Decleration
-class UTankBarrel;  
+class UTankBarrel; 
+class UTurret;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -21,12 +22,16 @@ public:
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
+	void SetTurretReference(UTurret* TurretToSet);
+
 public:
 	
 	void AimAt(FVector HitLocation , float LaunchSpeed);
 
 private:
 	UTankBarrel* Barrel = nullptr;
+
+	UTurret* Turret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
 
