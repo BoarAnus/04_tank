@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
+#include "GameFramework/Actor.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "UObject/Class.h"
@@ -48,14 +49,18 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::FireTank()
 {
-	UE_LOG(LogTemp, Warning, TEXT("FIRE"))
-
-		if (!Barrel) { return; }
-	//Spawn projectile
-	GetWorld()->SpawnActor<AProjectile>
-		(ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("LaunchPoint")),
-			Barrel->GetSocketRotation(FName("LaunchPoint"))
-		);
+	bool IsReloaded =  (GetWorld()->GetTimeSeconds() - LastFiredTime) > ReloadTimeInSeconds;
+	
+	if (Barrel && IsReloaded)
+	{
+		//Spawn projectile
+		auto projectile = GetWorld()->SpawnActor<AProjectile>
+			(ProjectileBlueprint,
+				Barrel->GetSocketLocation(FName("LaunchPoint")),
+				Barrel->GetSocketRotation(FName("LaunchPoint"))
+				);
+		LastFiredTime = GetWorld()->GetTimeSeconds();
+		projectile->LaunchProjectile(LaunchSpeed);
+	}
 }
 

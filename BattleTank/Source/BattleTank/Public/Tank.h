@@ -51,8 +51,13 @@ protected:
 
 private:
 
+	UPROPERTY(EditAnywhere)
+		float ReloadTimeInSeconds = 3;
+
 	// Local barrel reference for firing
 	UTankBarrel* Barrel = nullptr;
+
+	float LastFiredTime = 0;
 
 };
 

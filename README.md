@@ -27,3 +27,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Tank Barrel now moving! Did the clamps!
 *Tank Turret does the moving! Did the challange without the help!(proud)
 *Spawning Rounds! Stationary rounds!
+*Ai tanks now fire. Reload timer implemented
