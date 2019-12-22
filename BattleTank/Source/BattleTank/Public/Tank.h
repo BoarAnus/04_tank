@@ -33,10 +33,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void FireTank();
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly)
+		float ReloadTimeInSeconds = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 		float LaunchSpeed = 5000;  //Todo Find sensible default
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 	
 	// Called to bind functionality to input
@@ -50,9 +53,6 @@ protected:
 
 
 private:
-
-	UPROPERTY(EditAnywhere)
-		float ReloadTimeInSeconds = 3;
 
 	// Local barrel reference for firing
 	UTankBarrel* Barrel = nullptr;
