@@ -29,3 +29,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Spawning Rounds! Stationary rounds!
 *Ai tanks now fire. Reload timer implemented
 *Added quit button
+*replaced tank treads with c++ classes and set inputs for throttle controls
