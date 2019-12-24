@@ -30,3 +30,5 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Ai tanks now fire. Reload timer implemented
 *Added quit button
 *replaced tank treads with c++ classes and set inputs for throttle controls
+*Got some janky movement working!
+*Got basic fly-by-wire going. fixed treads from unreal bug
