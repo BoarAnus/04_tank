@@ -32,3 +32,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *replaced tank treads with c++ classes and set inputs for throttle controls
 *Got some janky movement working!
 *Got basic fly-by-wire going. fixed treads from unreal bug
+*!!Temporaraly stoped AIs from fireing! Made AIs move forweard and in reverse

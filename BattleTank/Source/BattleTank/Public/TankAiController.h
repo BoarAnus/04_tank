@@ -22,6 +22,10 @@ protected:
 
 private:
 	virtual void Tick(float DeltaTime) override;
+
+	//How close can the tank get to the player
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float AcceptanceRadius = 3000;
 	
 };
 

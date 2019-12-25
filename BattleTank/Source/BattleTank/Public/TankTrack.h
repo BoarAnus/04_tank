@@ -23,5 +23,5 @@ public:
 private:
 	//Max force per track in neutons
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
-		float MaxDrivingForce = 50000000.f; 
+		float MaxDrivingForce = 20000000.f; 
 };
