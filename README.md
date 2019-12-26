@@ -33,3 +33,4 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Got some janky movement working!
 *Got basic fly-by-wire going. fixed treads from unreal bug
 *!!Temporaraly stoped AIs from fireing! Made AIs move forweard and in reverse
+*Setup blueprints for crosshair UI to change colors/ AI tanks turn

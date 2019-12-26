@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// I have no copyright
 
 #include "TankTrack.h"
 #include "Math/Vector.h"
@@ -11,6 +11,7 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 	RightTrack = RightTrackToSet;
 }
 
+// Intend to move foward. positive is foreward
 void UTankMovementComponent::IntendMoveFoward(float Throw)
 {
 	if (!LeftTrack || !RightTrack) { return; }
@@ -18,6 +19,7 @@ void UTankMovementComponent::IntendMoveFoward(float Throw)
 	RightTrack->SetThrottle(Throw);
 }
 
+// intend to turn. positive is right
 void UTankMovementComponent::IntendTurn(float Throw)
 {
 	if (!LeftTrack || !RightTrack) { return; }
@@ -31,9 +33,12 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 	auto TankFoweward = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	auto AiForewardIntention = MoveVelocity.GetSafeNormal();
-	auto StickThrow = FVector::DotProduct(TankFoweward, AiForewardIntention);
+	auto TrottleStickThrow = FVector::DotProduct(TankFoweward, AiForewardIntention);
 
-	IntendMoveFoward(StickThrow);
+	auto TurnStickThrow = FVector::CrossProduct(TankFoweward, AiForewardIntention ).Z;
+
+	IntendTurn(TurnStickThrow);
+	IntendMoveFoward(TrottleStickThrow);
 	
 	
 	// UE_LOG(LogTemp, Warning, TEXT("%s is trying to move to %s"), *TankName, *MoveVelocityString);

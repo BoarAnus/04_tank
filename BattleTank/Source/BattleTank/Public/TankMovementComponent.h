@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// I have no copyright
 
 #pragma once
 
@@ -25,14 +25,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void IntendTurn(float Throw);
 
-	//TODO Check best protection of this component
-	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+	
 
 private:
-
+	// Called from the pathfinding logic by the AI controllers
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+	
 	UTankTrack* LeftTrack = nullptr;
+	
 	UTankTrack* RightTrack = nullptr;
 
-protected:
 	
 };
