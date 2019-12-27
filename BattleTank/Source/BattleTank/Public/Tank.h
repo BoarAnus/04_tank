@@ -46,6 +46,7 @@ protected:
 
 
 private:
+	void BeginPlay() override;
 
 	// Local barrel reference for firing
 	UTankBarrel* Barrel = nullptr;  //TODO remove

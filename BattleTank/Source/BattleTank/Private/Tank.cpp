@@ -1,5 +1,6 @@
 // I have no copyright
 
+#include "Tank.h"
 #include "TankAimingComonent.h"
 #include "Engine/World.h"
 #include "Engine.h"
@@ -9,16 +10,28 @@
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "UObject/Class.h"
-#include "Tank.h"
+
 
 // Sets default values
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	TankAimingComponent = FindComponentByClass<UTankAimingComonent>();
-	UE_LOG(LogTemp,Warning,TEXT(" %s tank aiming component "),*TankAimingComponent->GetName())
+	
 }
+
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();	
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComonent>();
+	if (!TankAimingComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("not getting the tank aiming component!"))
+	}
+
+}
+
 
 void ATank::AimAt(FVector HitLocation)
 {

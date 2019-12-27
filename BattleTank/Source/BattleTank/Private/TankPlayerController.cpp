@@ -2,7 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "GameFramework/PlayerState.h"
-#include "Public/Tank.h"
+#include "Tank.h"
 #include "TankAimingComonent.h"
 #include "Math/Vector.h"
 #include "Engine/World.h"

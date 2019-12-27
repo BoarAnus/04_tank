@@ -1,12 +1,13 @@
 // I have no copyright
 
+#include "TankAimingComonent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"
 #include "TankBarrel.h"
 #include "Turret.h"
 #include "BattleTank.h"
-#include "TankAimingComonent.h"
+
 
 
 // Sets default values for this component's properties

@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
-#include "GameFramework/PlayerState.h"
 #include "TankAiController.h"
+#include "GameFramework/PlayerState.h"
 #include "Tank.h"
 #include "Components/SceneComponent.h"
 #include "GameFramework/Actor.h"
@@ -11,7 +10,9 @@
 void ATankAiController::BeginPlay()
 {
 	Super::BeginPlay();
+
 }
+
 
 void ATankAiController::Tick(float DeltaTime)
 {
