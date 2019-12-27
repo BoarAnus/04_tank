@@ -14,7 +14,7 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 // Intend to move foward. positive is foreward
 void UTankMovementComponent::IntendMoveFoward(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 }
@@ -22,7 +22,7 @@ void UTankMovementComponent::IntendMoveFoward(float Throw)
 // intend to turn. positive is right
 void UTankMovementComponent::IntendTurn(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
@@ -40,7 +40,5 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	IntendTurn(TurnStickThrow);
 	IntendMoveFoward(TrottleStickThrow);
 	
-	
 	// UE_LOG(LogTemp, Warning, TEXT("%s is trying to move to %s"), *TankName, *MoveVelocityString);
-
 }

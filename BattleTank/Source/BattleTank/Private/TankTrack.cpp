@@ -11,12 +11,7 @@ void UTankTrack::SetThrottle(float Throttle)
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 
-	if (!TankRoot)
-	{
-		UE_LOG(LogTemp,Warning,TEXT("NO TRACK AT TANKROOT"))
-	}
-	else
-	{
-		TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-	}
+	if (!ensure(TankRoot)) { return; }
+	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+
 }

@@ -6,7 +6,9 @@
 #include "GameFramework/NavMovementComponent.h"
 #include "TankMovementComponent.generated.h"
 
+// Foreward declarations
 class UTankTrack;
+
 /**
  * 
  */
@@ -25,8 +27,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void IntendTurn(float Throw);
 
-	
-
 private:
 	// Called from the pathfinding logic by the AI controllers
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
@@ -35,5 +35,4 @@ private:
 	
 	UTankTrack* RightTrack = nullptr;
 
-	
 };

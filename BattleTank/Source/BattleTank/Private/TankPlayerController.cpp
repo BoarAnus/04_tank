@@ -2,7 +2,8 @@
 
 #include "TankPlayerController.h"
 #include "GameFramework/PlayerState.h"
-#include "Public/Tank.h"	
+#include "Public/Tank.h"
+#include "TankAimingComonent.h"
 #include "Math/Vector.h"
 #include "Engine/World.h"
 #include "BattleTank.h"
@@ -10,16 +11,9 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay(); // Make sure all preveus code gets called
-	auto ControlledTank = GetControlledTank();
-	if (ControlledTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player Controlling: %s "), *(ControlledTank->GetName()))
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT(" Player is not poseeseong a tank "))
-	}
-
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComonent>();
+	if (!ensure(AimingComponent)) { return; }
+	FoundAimingComponent(AimingComponent);
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -35,7 +29,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; } //protect engine from crashing
+	if (!ensure(GetControlledTank())) { return; } //protect engine from crashing
 
 	FVector HitLocation; // Out Parameter
 	if (GetSightRayHitLocation(HitLocation)) //Get world locations of linetrace through crosshair

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// I have no copyright
 
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -7,6 +7,7 @@
 #include "Turret.h"
 #include "BattleTank.h"
 #include "TankAimingComonent.h"
+
 
 // Sets default values for this component's properties
 UTankAimingComonent::UTankAimingComonent()
@@ -19,20 +20,16 @@ UTankAimingComonent::UTankAimingComonent()
 }
 
 
-void UTankAimingComonent::SetBarrelReference(UTankBarrel* BarrelToSet)
+void UTankAimingComonent::Initialize(UTankBarrel* BarrelToSet, UTurret* TurretToSet)
 {
-	if (!BarrelToSet) { return; }  //protect against crashing
 	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+	
 }
 
-void UTankAimingComonent::SetTurretReference(UTurret* TurretToSet)
-{
-	if (!TurretToSet) { return; }  //protect against crashing
-	Turret = TurretToSet;
-}
 void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
 {
-	if (!Barrel) { return; }  //protect against crashing
+	if (!ensure(Barrel)) { return; }  //protect against crashing
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("LaunchPoint"));
@@ -52,40 +49,19 @@ void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection); 
-		
-	}else
-	{
-		
 	}
-
-	
-
 }
 
 void UTankAimingComonent::MoveBarrelTowards(FVector AimDirection)
 {
+	if (!ensure(Barrel && Turret)) { return; } // protect against crash
+
 	//Get desired rotation
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	
-
-	//get desired elevation
-	//Get current rotation
-	//get cuttent elevation
-
 
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
-
-
-
-	//if current elevation is desired elevation
-		//do nothing
-	//else move barrel
-
-	//if current rotation is desired rotation
-		// do nothing
-	//else move barrel
 }
 

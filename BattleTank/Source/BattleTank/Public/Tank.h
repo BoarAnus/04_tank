@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// I have no copyright
 
 #pragma once
 
@@ -11,10 +11,9 @@ class UTankBarrel;
 class UTurret;
 class UTankAimingComonent;
 class AProjectile;
-class UTankMovementComponent;
 
 
-UCLASS()
+UCLASS(ClassGroup=(Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API ATank : public APawn
 {
 	GENERATED_BODY()
@@ -25,41 +24,31 @@ public:
 	
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable)
-		void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable)
-		void SetTurretReference(UTurret* TurretToSet);
+	//UFUNCTION(BlueprintCallable, Category = "Setup")
+		void InitializeAIM(UTankBarrel* BarrelToSet, UTurret* TurretToSet);
 
 	UFUNCTION(BlueprintCallable)
 		void FireTank();
 
 	UPROPERTY(EditDefaultsOnly)
 		float ReloadTimeInSeconds = 3;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LaunchSpeed = 5000;  //TODO remove when firing is out
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
-		float LaunchSpeed = 5000;  //Todo Find sensible default
-
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 	
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
+	
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComonent* TankAimingComponent = nullptr;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 
 	// Local barrel reference for firing
-	UTankBarrel* Barrel = nullptr;
+	UTankBarrel* Barrel = nullptr;  //TODO remove
 
 	float LastFiredTime = 0;
 
