@@ -2,7 +2,6 @@
 
 #include "TankPlayerController.h"
 #include "GameFramework/PlayerState.h"
-#include "Tank.h"
 #include "TankAimingComonent.h"
 #include "Math/Vector.h"
 #include "Engine/World.h"
@@ -11,9 +10,9 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay(); // Make sure all preveus code gets called
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComonent>();
-	if (!ensure(AimingComponent)) { return; }
-	FoundAimingComponent(AimingComponent);
+	auto AimingComponent =GetPawn()->FindComponentByClass<UTankAimingComonent>();
+	if (!ensure(AimingComponent)) { return; }  //Pointer Protection
+	FoundAimingComponent(AimingComponent);  //Call Blueprint to setup retcile
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -22,19 +21,14 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrosshair();
 }
 	
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!ensure(GetControlledTank())) { return; } //protect engine from crashing
-
 	FVector HitLocation; // Out Parameter
 	if (GetSightRayHitLocation(HitLocation)) //Get world locations of linetrace through crosshair
 	{
-		GetControlledTank()->AimAt(HitLocation);	
+		auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComonent>();
+		if (!ensure(AimingComponent)) { return; }  //Pointer Protection
+		AimingComponent->AimAt(HitLocation);
 	}
 	
 }

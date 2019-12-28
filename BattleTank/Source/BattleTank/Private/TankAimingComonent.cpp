@@ -28,8 +28,9 @@ void UTankAimingComonent::Initialize(UTankBarrel* BarrelToSet, UTurret* TurretTo
 	
 }
 
-void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
+void UTankAimingComonent::AimAt(FVector HitLocation)
 {
+	
 	if (!ensure(Barrel)) { return; }  //protect against crashing
 
 	FVector OutLaunchVelocity;
@@ -39,7 +40,7 @@ void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
 		OutLaunchVelocity,
 		StartLocation,
 		HitLocation,
-		LaunchSpeed,
+		AimLaunchSpeed,
 		false,
 		0.f,
 		0.f,
@@ -48,10 +49,12 @@ void UTankAimingComonent::AimAt(FVector HitLocation ,  float LaunchSpeed)
 
 	if (BHaveAimSoulution)
 	{
+		
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection); 
 	}
 }
+
 
 void UTankAimingComonent::MoveBarrelTowards(FVector AimDirection)
 {

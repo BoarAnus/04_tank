@@ -9,6 +9,8 @@
 
 
 class ATank;
+//class UTankAimingComonent;
+
 /**
  * 
  */
@@ -26,7 +28,8 @@ private:
 	//How close can the tank get to the player
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float AcceptanceRadius = 3000;
-	
+
+
 };
 
 

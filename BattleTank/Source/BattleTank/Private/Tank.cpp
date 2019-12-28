@@ -1,7 +1,6 @@
 // I have no copyright
 
 #include "Tank.h"
-#include "TankAimingComonent.h"
 #include "Engine/World.h"
 #include "Engine.h"
 #include "TankBarrel.h"
@@ -23,27 +22,12 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();	
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComonent>();
-	if (!TankAimingComponent)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("not getting the tank aiming component!"))
-	}
-
 }
 
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }	//Protect against crash
-
-	TankAimingComponent->AimAt(HitLocation , LaunchSpeed);
-}
 
 void ATank::InitializeAIM(UTankBarrel* BarrelToSet, UTurret* TurretToSet)
 {
-	Barrel = BarrelToSet;
-	//TankAimingComponent->Initialize(BarrelToSet, TurretToSet);
+	Barrel = BarrelToSet; // needed for fire
 }
 
 
