@@ -1,9 +1,13 @@
 // I have no copyright
 
 #include "TankAimingComonent.h"
+
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"
+#include "GameFramework/Actor.h"
+#include "Math/Vector.h"
+
 #include "TankBarrel.h"
 #include "Turret.h"
 #include "Projectile.h"
@@ -19,6 +23,28 @@ UTankAimingComonent::UTankAimingComonent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
+}
+
+void UTankAimingComonent::BeginPlay()
+{
+	Super::BeginPlay();
+	LastFiredTime = GetWorld()->GetTimeSeconds();
+}
+
+void UTankAimingComonent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	if ((GetWorld()->GetTimeSeconds() - LastFiredTime) < ReloadTimeInSeconds)
+	{
+		FireingStatus = EFiringStatus::Reloading;
+	}
+	else if (IsBarrelMoving())
+	{
+		FireingStatus = EFiringStatus::Aiming;
+	}
+	else
+	{
+		FireingStatus = EFiringStatus::Locked;
+	}
 }
 
 
@@ -51,15 +77,26 @@ void UTankAimingComonent::AimAt(FVector HitLocation)
 	if (BHaveAimSoulution)
 	{
 		
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection); 
 	}
 }
 
 
+bool UTankAimingComonent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) { return true; } // protect against crash
+
+	FVector StartLocation = Barrel->GetForwardVector();
+
+	return !StartLocation.Equals(AimDirection, 0.01);
+
+}
+
 void UTankAimingComonent::MoveBarrelTowards(FVector AimDirection)
 {
-	if (!ensure(Barrel && Turret)) { return; } // protect against crash
+	if (!ensure(Barrel)) { return; } // protect against crash
+	if (!ensure(Turret)) { return; } // protect against crash
 
 	//Get desired rotation
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
@@ -73,9 +110,7 @@ void UTankAimingComonent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComonent::FireTank()
 {
-	bool IsReloaded = (GetWorld()->GetTimeSeconds() - LastFiredTime) > ReloadTimeInSeconds;
-
-	if (Barrel && IsReloaded)
+	if (FireingStatus != EFiringStatus::Reloading)
 	{
 		//Spawn projectile
 		auto projectile = GetWorld()->SpawnActor<AProjectile>
@@ -84,7 +119,10 @@ void UTankAimingComonent::FireTank()
 				Barrel->GetSocketRotation(FName("LaunchPoint"))
 				);
 		LastFiredTime = GetWorld()->GetTimeSeconds();
-		projectile->LaunchProjectile(AimLaunchSpeed);
+		if (projectile)
+		{
+			projectile->LaunchProjectile(AimLaunchSpeed);
+		}
 	}
 }
 

@@ -35,13 +35,24 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void FireTank();
 
+protected:
+
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+		EFiringStatus FireingStatus = EFiringStatus::Reloading;
+
 private:
 	// Sets default values for this component's properties
 	UTankAimingComonent();
 
+	virtual void BeginPlay() override;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 	UTankBarrel* Barrel = nullptr;
 
 	UTurret* Turret = nullptr;
+
+	bool IsBarrelMoving();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float AimLaunchSpeed = 5000.f;
@@ -52,13 +63,9 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly)
-	float ReloadTimeInSeconds = 3;
+	float ReloadTimeInSeconds = 3.f;
 
-	float LastFiredTime = 0;
+	float LastFiredTime = 0.f;
 
-protected:
-	
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringStatus FireingStatus = EFiringStatus::Locked;
-
+	FVector AimDirection;
 };

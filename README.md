@@ -36,3 +36,6 @@ Thanks for looking at my code! Brought to you by the Boars Anus.
 *Setup blueprints for crosshair UI to change colors/ AI tanks turn
 *Got the aiming on the right architecture, broke aiming reticle.
 *Finished re-Factor of code. reticle seems to work again. 
+*Got the reticle working and changing colors. added WASD controlls!
+
+
