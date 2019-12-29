@@ -23,6 +23,8 @@ void ATankPlayerController::Tick(float DeltaTime)
 	
 void ATankPlayerController::AimTowardsCrosshair()
 {
+	if (!GetPawn()) { return; } // crash protection
+
 	FVector HitLocation; // Out Parameter
 	if (GetSightRayHitLocation(HitLocation)) //Get world locations of linetrace through crosshair
 	{
