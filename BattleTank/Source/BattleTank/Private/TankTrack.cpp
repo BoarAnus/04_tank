@@ -17,42 +17,54 @@ void UTankTrack::BeginPlay()
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormanImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp,Warning, TEXT("im hit!"))
+	//Drive tracks
+	//apply sideways force
+	ApplySidewaysForce();
 }
 
 
 UTankTrack::UTankTrack()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 }
-void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+
+
+void UTankTrack::ApplySidewaysForce()
 {
+
+	auto DeltaTime = GetWorld()->GetDeltaSeconds();
 	//Calculate slippage speed crossproduct
 	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
 	//Work out required acceleration this frame to correct
 	auto CorrectionAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
 
 	//Calculate and aplly sideways force
-	auto TankRoot = Cast<UStaticMeshComponent>( GetOwner()->GetRootComponent());
+	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 
 	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration) / 2;
-	
+
 	TankRoot->AddForce(CorrectionForce);
 	// f=ma
-
 }
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-		//TODO Clamp player throttle value 
-	auto ForceApplied = GetForwardVector() * Throttle * MaxDrivingForce;
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle,-1,+1);
+	DriveTrack();
+	CurrentThrottle = 0;
+}
+
+void UTankTrack::DriveTrack()
+{
+	//TODO Clamp player throttle value 
+	auto ForceApplied = GetForwardVector() * CurrentThrottle * MaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 
 	if (!ensure(TankRoot)) { return; }  //pointer protection
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-	
-}
 
+
+}
 
