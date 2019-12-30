@@ -12,7 +12,8 @@ enum class EFiringStatus : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	Out
 };
 
 //Foward Declerations
@@ -31,7 +32,12 @@ public:
 	void Initialize(UTankBarrel* BarrelToSet, UTurret* TurretToSet);
 	
 	void AimAt(FVector HitLocation);
-	
+
+	UFUNCTION(BlueprintCallable)
+	int GetAmmoRemaining() const;
+		
+	EFiringStatus GetFireingState() const;
+
 	UFUNCTION(BlueprintCallable)
 	void FireTank();
 
@@ -64,6 +70,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float ReloadTimeInSeconds = 3.f;
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 AmmoRemaining = 10;
 
 	float LastFiredTime = 0.f;
 
