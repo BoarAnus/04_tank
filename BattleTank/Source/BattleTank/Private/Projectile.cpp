@@ -1,6 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Projectile.h"
+#include "GameFramework/Actor.h"
+#include "Components/SceneComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Components/PrimitiveComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Math/Vector.h"
 
 
@@ -8,8 +14,21 @@
 AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	ProjectileMovement = CreateDefaultSubobject < UProjectileMovementComponent >(FName("Projectile Movement"));
+
+	CollisionMesh = CreateDefaultSubobject < UStaticMeshComponent >(FName("Collision Mesh"));
+	SetRootComponent(CollisionMesh);
+	CollisionMesh->SetNotifyRigidBodyCollision(true);
+
+	LaunchBlast = CreateDefaultSubobject < UParticleSystemComponent >(FName("Launch Blast"));
+	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);  
+
+	ImpactBlast = CreateDefaultSubobject < UParticleSystemComponent >(FName("Impact Blast"));
+	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	ImpactBlast->bAutoActivate = false;
+
+	
 	ProjectileMovement->bAutoActivate = false;
 }
 
@@ -17,15 +36,19 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//Setting up Event on collision
+	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);  //Is an actor is so need to call CollisionMesh. No need if it were a static mesh component
 	
 }
 
-// Called every frame
-void AProjectile::Tick(float DeltaTime)
+void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormanImpulse, const FHitResult& Hit)
 {
-	Super::Tick(DeltaTime);
+	ImpactBlast->Activate();
+	LaunchBlast->Deactivate();
 
 }
+
 
 void AProjectile::LaunchProjectile(float Speed)
 {

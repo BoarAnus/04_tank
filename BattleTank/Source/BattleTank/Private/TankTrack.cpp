@@ -7,8 +7,6 @@
 #include "Components/PrimitiveComponent.h"
 #include "Components/SceneComponent.h"
 
-#include "DrawDebugHelpers.h"
-
 void UTankTrack::BeginPlay()
 {
 	Super::BeginPlay();

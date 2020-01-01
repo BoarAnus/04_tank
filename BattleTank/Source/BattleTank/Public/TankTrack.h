@@ -3,12 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
 
 /**
  * TankTrack is used to set max driving force and apply forces to the tank
  */
+
 UCLASS(meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 {
@@ -28,8 +28,6 @@ private:
 	virtual void BeginPlay() override;
 
 	UTankTrack();
-
-	//void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void ApplySidewaysForce();
 
