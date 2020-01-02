@@ -1,6 +1,8 @@
 // I have no copyright
 
 #include "Tank.h"
+#include "Math/UnrealMathUtility.h"
+#include "GameFramework/Actor.h"
 #include "Engine.h"
 
 
@@ -16,5 +18,23 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();	
+}
+
+float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
+{
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	float DamageToApply = FMath::Clamp<int>(DamagePoints, 0, TankHealth);
+	
+	TankHealth = TankHealth - DamageToApply;
+
+	if (TankHealth <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Tank Dead! BURRRRN!"));
+	}
+	
+
+	return DamageToApply;
 }
 
