@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Tank.h"
 #include "GameFramework/PlayerState.h"
 #include "TankAimingComonent.h"
 #include "Math/Vector.h"
@@ -86,5 +87,21 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	{
 		return false;
 	}
+}
+
+void ATankPlayerController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PosessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PosessedTank)) { return; }
+		PosessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPosessedTankDeath);
+	}
+}
+
+void ATankPlayerController::OnPosessedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Player DEADDDDDD"));
 }
 

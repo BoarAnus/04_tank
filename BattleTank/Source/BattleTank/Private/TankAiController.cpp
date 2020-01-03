@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAiController.h"
+#include "Tank.h"
 #include "GameFramework/PlayerState.h"
 #include "TankAimingComonent.h"
 #include "Components/SceneComponent.h"
@@ -36,4 +37,23 @@ void ATankAiController::Tick(float DeltaTime)
 		
 	}
 	
+}
+
+void ATankAiController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PosessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PosessedTank)) { return; }
+		PosessedTank->OnDeath.AddUniqueDynamic(this, &ATankAiController::OnPosessedTankDeath);
+		//Suscribe local method to the tanks death
+	}
+}
+
+void ATankAiController::OnPosessedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("DEADDDDDD"));
+
+
 }

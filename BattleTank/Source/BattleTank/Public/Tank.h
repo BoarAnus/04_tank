@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Tank.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 
 UCLASS(ClassGroup=(Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API ATank : public APawn
@@ -20,6 +22,7 @@ public:
 	//Called by the engine when damage is delt
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	
+	FTankDelegate OnDeath;
 
 private:
 	void BeginPlay() override;

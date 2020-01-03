@@ -11,6 +11,8 @@ class UTankProjectileComponent;
 class UParticleSystemComponent;
 class URadialForceComponent;
 
+
+
 UCLASS()
 class BATTLETANK_API AProjectile : public AActor
 {
@@ -49,6 +51,9 @@ private:
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormanImpulse, const FHitResult& Hit);
+
+
+	
 
 	void OnTimerExpire();
 
