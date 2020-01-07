@@ -2,6 +2,8 @@
 
 #include "Tank.h"
 #include "Math/UnrealMathUtility.h"
+#include "PhysicsEngine/PhysicsConstraintComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 #include "Engine.h"
 
@@ -10,9 +12,9 @@
 // Sets default values
 ATank::ATank()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	
+
 }
 
 void ATank::BeginPlay()

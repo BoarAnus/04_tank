@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "Tank.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);  //needed to enable events on damage
 
+class UPhysicsConstraintComponent;
+class UStaticMeshComponent;
 
 UCLASS(ClassGroup=(Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API ATank : public APawn
@@ -26,7 +28,7 @@ public:
 
 private:
 	void BeginPlay() override;
-
+	
 	// Sets default values for this pawn's properties
 	ATank();
 
