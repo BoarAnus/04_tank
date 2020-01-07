@@ -1,8 +1,10 @@
 // I have no copyright
 
+
+#include "SpawnPoint.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
-#include "SpawnPoint.h"
+
 
 // Sets default values for this component's properties
 USpawnPoint::USpawnPoint()

@@ -22,6 +22,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void SetupConstraints();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -30,12 +32,15 @@ public:
 private:
 	//Components
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent* BodyObject = nullptr;
-	
-	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* WheelObject = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UPhysicsConstraintComponent* PhysicsConstraint = nullptr;
+	UPhysicsConstraintComponent* WheelConstraint = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* AxleObject = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPhysicsConstraintComponent* AxleConstraint = nullptr;
 
 };
