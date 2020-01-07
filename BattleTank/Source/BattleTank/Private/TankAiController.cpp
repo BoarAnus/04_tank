@@ -6,6 +6,7 @@
 #include "TankAimingComonent.h"
 #include "Components/SceneComponent.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 #include "BattleTank.h"		//needed for the tank
 
 void ATankAiController::BeginPlay()
@@ -54,6 +55,8 @@ void ATankAiController::SetPawn(APawn* InPawn)
 void ATankAiController::OnPosessedTankDeath()
 {
 	UE_LOG(LogTemp, Warning, TEXT("DEADDDDDD"));
-
+	if (!GetPawn()) { return; }  //protect against crash
+	GetPawn()->DetachFromControllerPendingDestroy();
+	
 
 }

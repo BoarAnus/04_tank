@@ -33,7 +33,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 TankStartingHealth = 100;
 
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	int32 TankHealth = TankStartingHealth;
 };
 
