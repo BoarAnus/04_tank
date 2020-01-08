@@ -18,16 +18,17 @@ public:
 	// Sets default values for this actor's properties
 	ASprungWheel();
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	void AddDrivingForce(float ForceMagnigude);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	void SetupConstraints();
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+	
 
 private:
 	//Components
