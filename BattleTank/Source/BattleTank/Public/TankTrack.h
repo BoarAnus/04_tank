@@ -23,7 +23,7 @@ public:
 private:
 	//Max force per track in neutons
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		float MaxDrivingForce = 20000000.f;
+		float MaxDrivingForce = 40000000.f;
 
 	virtual void BeginPlay() override;
 

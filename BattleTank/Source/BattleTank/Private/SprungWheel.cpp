@@ -6,12 +6,14 @@
 #include "Engine/EngineTypes.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/PrimitiveComponent.h"
 
 // Sets default values
 ASprungWheel::ASprungWheel()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.TickGroup = TG_PostPhysics;
 
 	AxleConstraint = CreateDefaultSubobject <UPhysicsConstraintComponent>(FName("Axle Physics component"));
 	SetRootComponent(AxleConstraint);
@@ -24,6 +26,7 @@ ASprungWheel::ASprungWheel()
 
 	WheelObject = CreateDefaultSubobject <UStaticMeshComponent>(FName("Wheel Object"));
 	WheelObject->SetupAttachment(AxleObject);
+	
 
 }
 
@@ -31,6 +34,9 @@ ASprungWheel::ASprungWheel()
 void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
+	WheelObject->SetNotifyRigidBodyCollision(true);
+	WheelObject->OnComponentHit.AddDynamic(this, &ASprungWheel::OnHit);
+	
 
 	SetupConstraints();
 	
@@ -43,11 +49,13 @@ void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	ForceMagnigudeThisFrame = 0.f;
+
 }
 
 void ASprungWheel::AddDrivingForce(float ForceMagnigude)
 {
-	WheelObject->AddForce(AxleObject->GetForwardVector() * ForceMagnigude);
+	ForceMagnigudeThisFrame += ForceMagnigude;
 
 }
 
@@ -61,5 +69,16 @@ void ASprungWheel::SetupConstraints()
 	
 	AxleConstraint->SetConstrainedComponents(BodyRoot, NAME_None, AxleObject, NAME_None);
 	WheelConstraint->SetConstrainedComponents(AxleObject, NAME_None, WheelObject, NAME_None);
+}
+
+void ASprungWheel::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	ApplyForce();
+}
+
+void ASprungWheel::ApplyForce()
+{
+	WheelObject->AddForce(AxleObject->GetForwardVector() * ForceMagnigudeThisFrame);
+	
 }
 
